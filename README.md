@@ -1,2 +1,2 @@
-# python-api-decision-maker
-API em Python desenvolvida para auxiliar nas decisões dos mais indecisos!
+# API Python Anime Decision Maker
+API em Python desenvolvida para auxiliar nas escolhas de animes dos mais indecisos!
