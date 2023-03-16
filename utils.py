@@ -6,7 +6,7 @@ def inserir_anime(anime_list, anime):
         response = 'anime "{}" adicionado com sucesso!'.format(anime)
 
     except Exception:
-        response = 'erro não identificado'
+        response = 'Erro não identificado'
     return response
 
 
@@ -24,4 +24,6 @@ def gerar_anime_aleatorio(anime_list):
             anime_aleatorio = anime_list[numero_aleatorio -1]
             continue
     return anime_aleatorio
+
+
 

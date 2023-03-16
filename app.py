@@ -15,12 +15,13 @@ from utils import *
 def cls():
     os.system('cls' if os.name=='nt' else 'clear')
 
-anime_list = ['Naruto', 'haikyuu', 'one punch man', 'dbz']
+# Lista de animes, para adicionar manualmente é necessário digitar o anime entre aspas simples, e inteiramente minúsculo
+anime_list = ['naruto', 'haikyuu', 'one punch man', 'dbz']
 anime_list = list(filter(None, anime_list))
 
 def menu_inicial():
     cls()
-    # Para adicionar, remover ou alterar alguma opção do menu, basta alterar o seguinte dicionário:
+    # Para adicionar, remover ou alterar alguma opção do menu, basta alterar a seguinte lista:
     lista_de_opcoes_menu = ['Escolha um anime por mim', 'Ver minha lista de animes', 'Editar minha lista de animes', 'Sair']
 
     printar_titulo("Olá, sou o ajudante de decisões v.01")
@@ -94,15 +95,89 @@ def editar_lista_de_animes(anime_list):
 
     match numero_opcao_escolhida:
         case 1:
-            printar_entre_linhas('Adicionar anime da lista')
+            adicionar_anime_na_lista(anime_list)
         case 2:
-            printar_entre_linhas('Remover anime da lista')
+            remover_anime_da_lista(anime_list)
         case 3:
             menu_inicial()
         case 4:
             printar_titulo('Até a próxima! ;)')
         case _:
             editar_lista_de_animes()
+
+
+def adicionar_anime_na_lista(anime_list):
+    try:
+        while True:
+            cls()
+            printar_titulo('Adicionador de animes')
+            anime = input('Digite "2" para voltar ao menu '
+                          '\n Ou digite o nome do anime que você quer adicionar --> ')
+            if anime == "2":
+                editar_lista_de_animes(anime_list)
+                break
+
+            # Verifica se o usuário não digitou apenas espaços ou deixou o nome do anime vazio
+            if anime.isspace() or not anime:
+                printar_entre_linhas('O programa não aceita nomes vazios')
+                sleep(1)
+                continue
+
+            # Confirma o nome do anime
+            print('"{}"'.format(anime))
+            opcao = input('O nome do anime está correto? (S/N) --> ').upper()
+
+            if opcao == 'S' or opcao == 'SIM':
+                anime_list.append(anime)
+                printar_entre_linhas('Anime {} adicionado com sucesso!'.format(anime))
+                sleep(1)
+                editar_lista_de_animes(anime_list)
+                break
+
+    except Exception:
+        print('Erro, digite um nome válido')
+        sleep(1)
+        remover_anime_da_lista(anime_list)
+
+def remover_anime_da_lista(anime_list):
+    try:
+        while True:
+            cls()
+            printar_titulo('Removedor de animes')
+            printar_lista_de_animes(anime_list)
+            anime = input('Digite "2" para voltar ao menu '
+                            '\n Ou digite o nome do anime que você quer remover --> ')
+            if anime == "2":
+                editar_lista_de_animes(anime_list)
+                break
+
+             # Verifica se o usuário não digitou apenas espaços ou deixou o nome do anime vazio
+            if anime.isspace() or not anime:
+                printar_entre_linhas('O programa não aceita nomes vazios')
+                sleep(1)
+                continue
+
+            # Confirma o nome do anime
+            print('"{}"'.format(anime))
+            opcao = input('O nome do anime está correto? (S/N) --> ').upper()
+
+            if opcao == 'S' or opcao == 'SIM':
+                anime_list.remove(anime.lower())
+                printar_entre_linhas('Anime {} removido com sucesso!'.format(anime))
+                sleep(3)
+                remover_anime_da_lista(anime_list)
+                break
+
+    except ValueError:
+        print('Erro, anime não encontrado na lista')
+        sleep(2)
+        remover_anime_da_lista(anime_list)
+
+    except Exception:
+        print('Erro, digite um nome válido')
+        sleep(2)
+        remover_anime_da_lista(anime_list)
+
 
 
 if __name__ == '__main__':

@@ -11,14 +11,14 @@ def printar_opcoes(opcoes, tipo='n'):
     c = 1
     if tipo == 'n':
         for opcao in opcoes:
-            print(f'{c} - {opcao}')
+            print(f'{c} - {opcao[0].upper()+opcao[1:]}')
             c += 1
     elif tipo == '*':
         for opcao in opcoes:
-            print(f'*  {opcao}')
+            print(f'*  {opcao[0].upper()+opcao[1:]}')
     elif tipo == '#':
         for opcao in opcoes:
-            print(f'# {opcao}')
+            print(f'# {opcao[0].upper()+opcao[1:]}')
 
 def printar_titulo(frase):
     printar_linha()
