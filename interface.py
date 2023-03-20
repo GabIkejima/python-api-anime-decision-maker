@@ -7,7 +7,7 @@ def printar_entre_linhas(frase):
     printar_linha()
     print(frase)
     printar_linha()
-def printar_opcoes(opcoes, tipo='n'):
+def printar_opcoes(opcoes: object, tipo: object = 'n') -> object:
     c = 1
     if tipo == 'n':
         for opcao in opcoes:
@@ -44,11 +44,9 @@ def validar_opcao(frase, quantidade_de_opcoes):
             sleep(0.5)
     return opcao
 
-def printar_anime(anime):
+def printar_anime(anime, frase):
     try:
-        printar_linha()
-        print('Minha sugestão de anime é: {}'.format(anime[0].upper() + anime[1:].lower()))
-        printar_linha()
+        print('{} {}'.format(frase, anime[0].upper() + anime[1:].lower()))
     except Exception:
         printar_entre_linhas('Erro ao localizar anime!')
 

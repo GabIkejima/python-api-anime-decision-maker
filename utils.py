@@ -11,7 +11,7 @@ def inserir_anime(anime_list, anime):
 
 
 # Gerar o número correspondente da opção do anime
-def gerar_anime_aleatorio(anime_list):
+def gerar_anime_aleatorio_da_lista(anime_list):
     numero_aleatorio = random.randint(0, len(anime_list)-1)
     while True:
         try:

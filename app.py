@@ -9,20 +9,22 @@ Gabriel Higa Ikejima
 
 import os
 import sys
+import textwrap
 
 from interface import *
 from utils import *
+from request import *
 def cls():
     os.system('cls' if os.name=='nt' else 'clear')
 
 # Lista de animes, para adicionar manualmente é necessário digitar o anime entre aspas simples, e inteiramente minúsculo
-anime_list = ['naruto', 'haikyuu', 'one punch man', 'dbz']
+anime_list = ['naruto', 'haikyuu', 'one punch man', 'dbz', 'demon slayer']
 anime_list = list(filter(None, anime_list))
 
 def menu_inicial():
     cls()
     # Para adicionar, remover ou alterar alguma opção do menu, basta alterar a seguinte lista:
-    lista_de_opcoes_menu = ['Escolha um anime por mim', 'Ver minha lista de animes', 'Editar minha lista de animes', 'Sair']
+    lista_de_opcoes_menu = ['Escolha animes por mim', 'Ver minha lista de animes', 'Editar minha lista de animes', 'Sair']
 
     printar_titulo("Olá, sou o ajudante de decisões v.01")
     printar_opcoes(lista_de_opcoes_menu)
@@ -47,12 +49,17 @@ def menu_inicial():
 def menu_animes():
     cls()
     # Para adicionar, remover ou alterar alguma opção do menu de anime, basta alterar o seguinte dicionário:
-    lista_de_opcoes_anime = ['Gerar outro anime', 'Ver detalhes do anime', 'Voltar', 'Sair']
+    lista_de_opcoes_anime = ['Gerar outros animes', 'Ver detalhes do anime da API', 'Voltar', 'Sair']
     numero_opcao_escolhida_anime = 1
     while (numero_opcao_escolhida_anime == 1):
-        anime_gerado = gerar_anime_aleatorio(anime_list) # gera um anime aleatorio da lista de animes
+        anime_gerado_da_lista = gerar_anime_aleatorio_da_lista(anime_list) # gera um anime aleatorio da lista de animes
+        anime_gerado_da_api = gerar_informacao_do_anime_por_ID(random.randint(0, 500)) # gera um anime aleatorio da API
 
-        printar_anime(anime_gerado)
+        printar_linha()
+        printar_anime(anime_gerado_da_lista, 'Sugestão de anime da sua lista: ')
+        printar_anime(anime_gerado_da_api['titulo'], 'Sugestão de anime da API: ')
+        printar_linha()
+
         printar_opcoes(lista_de_opcoes_anime)
         numero_opcao_escolhida_anime = validar_opcao("Digite o número da sua opção --> ", len(lista_de_opcoes_anime))
 
@@ -60,16 +67,29 @@ def menu_animes():
             case 1:
                 continue
             case 2:
-                printar_titulo('Detalhes do anime {}'.format(anime_gerado))
+                printar_titulo('Detalhes do anime {}'.format(anime_gerado_da_api['titulo']))
+                print('Ano - ', anime_gerado_da_api['ano'])
+                print('Nota - ', anime_gerado_da_api['nota'])
+                texto = 'Sinopse - ' + anime_gerado_da_api['sinopse']
+                print (textwrap.fill(texto, width=70))
                 input('Digite qualquer coisa para continuar --> ')
-                menu_animes()
+                menu_inicial()
+                break
             case 3:
                 menu_inicial()
+                break
             case 4:
                 printar_titulo('Até a próxima! ;)')
                 break
             case _:
                 menu_animes()
+                break
+
+
+# -------------------------------------------------------------------
+# FUNÇÕES DA LISTA DE ANIMES
+# -------------------------------------------------------------------
+
 
 # Opção 2 do menu principal, para mostrar os items da lista de animes
 def printar_lista_de_animes(lista_de_animes):
