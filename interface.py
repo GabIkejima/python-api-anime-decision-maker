@@ -1,5 +1,6 @@
 from time import sleep
-
+from interface import *
+import textwrap
 def printar_linha(tam = 42):
     print ("-" * tam)
 
@@ -51,3 +52,9 @@ def printar_anime(anime, frase):
         printar_entre_linhas('Erro ao localizar anime!')
 
 
+def printar_detalhes(anime):
+    printar_titulo('Detalhes do anime {}'.format(anime['titulo']))
+    print('Ano - ', anime['ano'])
+    print('Nota - ', anime['nota'])
+    texto = 'Sinopse - ' + anime['sinopse']
+    print(textwrap.fill(texto, width=70))

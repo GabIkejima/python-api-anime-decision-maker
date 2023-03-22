@@ -1,6 +1,6 @@
 import requests
 import random
-
+import utils
 def gerar_informacao_do_anime_por_ID(id = random.randint(0, 500)):
     while True:
         url = 'https://api.jikan.moe/v4/anime/{}'.format(id)
@@ -29,7 +29,7 @@ def gerar_informacao_do_anime_por_ID(id = random.randint(0, 500)):
             anime['titulo'] = response_data['data']['title']
             anime['ano'] = response_data['data']['year']
             anime['nota'] = response_data['data']['score']
-            anime['sinopse'] = response_data['data']['synopsis']
+            anime['sinopse'] = utils.traduzir_texto(response_data['data']['synopsis'])
 
             # Verifica se os campos da resposta da API estão preenchidos com alguma informação
             if not anime['titulo']:
@@ -51,3 +51,7 @@ def gerar_informacao_do_anime_por_ID(id = random.randint(0, 500)):
             id = id_novo
             continue
 
+def ver_detalhe_do_anime(anime):
+    while True:
+
+        return "detalhes do {}".format(anime)

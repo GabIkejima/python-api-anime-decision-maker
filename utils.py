@@ -1,4 +1,13 @@
 import random
+from googletrans import Translator
+translator = Translator()
+
+def traduzir_texto(texto, idioma='pt'):
+    try:
+        traducao = translator.translate(texto, dest=idioma)
+        return(traducao.text)
+    except Exception:
+        return texto
 
 def inserir_anime(anime_list, anime):
     try:
