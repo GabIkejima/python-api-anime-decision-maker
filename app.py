@@ -17,8 +17,10 @@ from request import *
 def cls():
     os.system('cls' if os.name=='nt' else 'clear')
 
-# Lista de animes, para adicionar manualmente é necessário digitar o anime entre aspas simples, e inteiramente minúsculo
-anime_list = ['naruto', 'haikyuu', 'one punch man', 'dbz', 'demon slayer']
+# Lista de animes, para adicionar manualmente [ainda em versão beta, pode ocorrer alguns erros ao exibir detalhes] é necessário digitar o nome do anime:
+# COMPLETO(evitar usar siglas) / ENTRE ASPAS SIMPLES / INTEIRAMENTE MINÚSCULO / SEPARADO POR ESPAÇOS / PRIORIZAR O TÍTULO JAPONES
+
+anime_list = ['naruto', 'haikyuu', 'one piece', 'dragon ball', 'a viagem de chihiro', 'castelo animado', 'Hauru no Ugoku Shiro', 'akira']
 anime_list = list(filter(None, anime_list))
 
 # -------------------------------------------------------------------
@@ -28,7 +30,7 @@ anime_list = list(filter(None, anime_list))
 def menu_inicial():
     cls()
     # Para adicionar, remover ou alterar alguma opção do menu, basta alterar a seguinte lista:
-    lista_de_opcoes_menu = ['Escolha animes por mim', 'Sugerir animes por mood', 'Ver minha lista de animes', 'Editar minha lista de animes', 'Sair']
+    lista_de_opcoes_menu = ['Escolha animes por mim', 'Sugerir animes por mood - em desenvolvimento', 'Ver minha lista de animes', 'Editar minha lista de animes', 'Sair']
 
     printar_titulo("Olá, sou o ajudante de decisões v.01")
     printar_opcoes(lista_de_opcoes_menu)
@@ -76,6 +78,8 @@ def menu_animes():
         match numero_opcao_escolhida_anime:
             case 1:
                 continue
+
+            # Exibir detalhes dos animes
             case 2:
                 lista_de_opcoes_detalhes = [anime_gerado_da_lista, anime_gerado_da_api['titulo'], 'Ambos']
 
@@ -83,17 +87,10 @@ def menu_animes():
                 printar_opcoes(lista_de_opcoes_detalhes)
                 numero_opcao_escolhida_detalhes = validar_opcao("Digite o número da sua opção --> ", len(lista_de_opcoes_detalhes))
 
-                if numero_opcao_escolhida_detalhes == 3:
-                    print('detalhes do anime lista')
-                    ## printar_detalhes(ver_detalhes)
-                    printar_linha()
-                    printar_detalhes(anime_gerado_da_api)
-                elif numero_opcao_escolhida_detalhes == 1:
-                    print('detalhes do anime lista')
-                elif numero_opcao_escolhida_detalhes == 2:
-                    printar_detalhes(anime_gerado_da_api)
-                input('Digite qualquer coisa para continuar --> ')
+                # Chamada da função do menu exibir detalhes
+                menu_exibir_detalhes_dos_animes(numero_opcao_escolhida_detalhes, anime_gerado_da_lista, anime_gerado_da_api)
 
+                input('Digite qualquer coisa para continuar --> ')
                 menu_inicial()
                 break
 
@@ -107,7 +104,6 @@ def menu_animes():
                 menu_animes()
                 break
 
-
 # -------------------------------------------------------------------
 # MENU SECUNDÁRIO - "Sugerir anime por mood"
 # -------------------------------------------------------------------
@@ -115,8 +111,7 @@ def menu_animes():
 def sugerir_anime_por_mood():
     cls()
     printar_titulo('Vou sugerir um anime com base no seu mood!')
-
-
+    print('Recurso em construção!')
 
 
 # -------------------------------------------------------------------
@@ -156,6 +151,39 @@ def editar_lista_de_animes(anime_list):
             printar_titulo('Até a próxima! ;)')
         case _:
             editar_lista_de_animes()
+
+# -------------------------------------------------------------------
+# MENU SECUNDÁRIO - "Exibir detalhes dos animes"
+# -------------------------------------------------------------------
+def menu_exibir_detalhes_dos_animes(numero_opcao_escolhida_detalhes, anime_gerado_da_lista, anime_gerado_da_api):
+    # Verifica qual opção de anime o usuário quer exibir as informações
+    cls()
+    if numero_opcao_escolhida_detalhes == 3:
+        # Tratamento para ver se foi possível localizar o ID do anime
+        resposta = (buscar_id_do_anime(anime_gerado_da_lista).split(':')[1])
+
+        if not resposta.isnumeric:
+            print(resposta)
+
+        else:
+            id_anime_gerado_lista = resposta
+            printar_detalhes(gerar_informacao_do_anime_por_ID(id_anime_gerado_lista))
+            printar_linha()
+            printar_detalhes(anime_gerado_da_api)
+
+    # Exibe as informações do anime 1 (Lista)
+    elif numero_opcao_escolhida_detalhes == 1:
+        # Tratamento para ver se foi possível localizar o ID do anime
+        resposta = buscar_id_do_anime(anime_gerado_da_lista).split(':')[1]
+        if not resposta.isnumeric:
+            print(resposta)
+        else:
+            id_anime_gerado_lista = resposta
+            printar_detalhes(gerar_informacao_do_anime_por_ID(id_anime_gerado_lista))
+
+    # Exibe as informações do anime 2 (API)
+    elif numero_opcao_escolhida_detalhes== 2:
+        printar_detalhes(anime_gerado_da_api)
 
 # -------------------------------------------------------------------
 # FUNÇÕES DA LISTA DE ANIMES

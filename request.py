@@ -43,7 +43,6 @@ def gerar_informacao_do_anime_por_ID(id = random.randint(0, 500)):
 
                 if not anime['sinopse']:
                     anime['sinopse'] = 'Sinopse não informada'
-
             return(anime)
 
         else:
@@ -51,7 +50,27 @@ def gerar_informacao_do_anime_por_ID(id = random.randint(0, 500)):
             id = id_novo
             continue
 
-def ver_detalhe_do_anime(anime):
-    while True:
+def buscar_id_do_anime(anime):
+    anime = anime.replace(' ', '+')
+    limite = 1
+    url = 'https://api.jikan.moe/v4/anime?q={}&limit={}&order_by=mal_id'.format(anime, limite)
+    response = requests.get(url=url, timeout=2)
+    if response.status_code >= 200 and response.status_code <= 299:
+        # Sucesso
+        response_data = response.json()
 
-        return "detalhes do {}".format(anime)
+        try:
+            id = response_data['data'][0]['mal_id']
+
+            if not id:
+                response = 'RESPONSE:Não foi possível encontrar esse anime,' \
+                           ' LEMBRETE: se o nome for composto, digite separado por espaços'
+                return response
+            else:
+                return f'ID:{id}'
+
+        except Exception:
+            response = 'RESPONSE:Não foi possível encontrar esse anime,' \
+                       ' LEMBRETE: se o nome for composto, digite separado por espaços'
+
+            return response
