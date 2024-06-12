@@ -2,9 +2,9 @@
 @autor
 Gabriel Higa Ikejima
 @version
-1.0
+1.1
 @since
-14 / 03 / 2023
+12 / 06 / 2024
 """
 
 import os
@@ -42,9 +42,10 @@ def menu_inicial():
             menu_animes()
         case 2:
             sugerir_anime_por_mood()
+            menu_inicial()
         case 3:
             printar_lista_de_animes(anime_list)
-            input('Digite qualquer coisa para continuar --> ')
+            input('Aperte enter para continuar --> ')
             menu_inicial()
         case 4:
             editar_lista_de_animes(anime_list)
@@ -90,7 +91,7 @@ def menu_animes():
                 # Chamada da função do menu exibir detalhes
                 menu_exibir_detalhes_dos_animes(numero_opcao_escolhida_detalhes, anime_gerado_da_lista, anime_gerado_da_api)
 
-                input('Digite qualquer coisa para continuar --> ')
+                input('Aperte enter para continuar --> ')
                 menu_inicial()
                 break
 

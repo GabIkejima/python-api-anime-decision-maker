@@ -1,0 +1,17 @@
+# Arquivos de byte compilado Python
+*.pyc
+
+# Diretório virtualenv
+venv/
+
+# Arquivos de cache
+__pycache__/
+
+# Arquivo de configuração de ambiente
+.env
+
+# Arquivos de log
+*.log
+
+# Arquivos de backup de editor
+*~
